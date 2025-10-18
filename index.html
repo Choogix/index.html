@@ -6,6 +6,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum=scale=1.0
     <meta http-equiv="X-UA-Compatible" content="ie=enge">
     <title>Shop</title>
+
     <style>
         @import url ('https://fonts.googleapis.com/css2?family=Montserrat:wght@200; 500&display=swap');
 
@@ -50,8 +51,19 @@
             height: 60px;
             width: 200px;
             font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: var(--tg-theme-button-color);
+            background: var(--tg-theme-button-text-color);
         }
 
+        button:hover {
+            background: var(--tg-theme-button-bg-color);
+        }
+    </style>
+</head>
+
 <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
-</style>
+
 </html>
