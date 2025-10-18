@@ -328,7 +328,7 @@ async def start_command(message: types.Message):
             [
                 KeyboardButton(
                     text="Открыть веб-страницу",
-                    web_app=WebAppInfo(url="https://github.com/Choogix/index.html.git/index.html")  # лучше https
+                    web_app=WebAppInfo(url="https://choogix.github.io/index.html/")  # лучше https
                 )
             ]
         ],
