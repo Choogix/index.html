@@ -2,18 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport">
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum=scale=1.0
-    <meta http-equiv="X-UA-Compatible" content="ie=enge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Shop</title>
 
     <style>
-        @import url ("https://fonts.googleapis.com/css2?family=Montserrat:wght@200; 500&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&display=swap");
 
         * {
             margin: 0;
-            padding : 0;
-            box-sizing: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -54,12 +53,26 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 500ms ease;
-            color: var(--tg-theme-button-color);
-            background: var(--tg-theme-button-text-color);
+            color: var(--tg-theme-button-text-color);
+            background: var(--tg-theme-button-color);
         }
 
         button:hover {
-            background: var(--tg-theme-button-bg-color);
+            opacity: 0.9;
+        }
+
+        form {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -67,34 +80,37 @@
 <body>
     <div id="main">
         <h1>Онлайн Магазин</h1>
-        <img src="https://cdn-icon-png.flaticon.com/512/3595/3595455.png">
+        <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" alt="shop icon">
         <p>Lorem ipsum</p>
         <button id="buy">Купить</button>
     </div>
-    <form   id="form">
+
+    <form id="form">
         <input type="text" placeholder="Имя" id="user_name">
         <input type="text" placeholder="Email" id="user_email">
         <input type="text" placeholder="Телефон" id="user_phone">
-        <button id="order">Оформить</button>
+        <button type="button" id="order">Оформить</button>
     </form>
-    <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <script>
-        let tg = window.Telegram.WebApp;
-        let buy = document.getElementById("buy");
-        let order = document.getElementById("order");
+        const tg = window.Telegram.WebApp;
+        const buy = document.getElementById("buy");
+        const order = document.getElementById("order");
 
-        buy.addEventListener("click", ()=> {
+        buy.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
             document.getElementById("form").style.display = "block";
-            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name+ " " + tg.initDataUnsafe.user.last_name;
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                document.getElementById("user_name").value =
+                    (tg.initDataUnsafe.user.first_name || '') + " " + (tg.initDataUnsafe.user.last_name || '');
+            }
         });
 
-        order.addEventListener("click", ()=> {
+        order.addEventListener("click", () => {
             tg.close();
-        } );
+        });
     </script>
-
-
 </body>
 </html>
