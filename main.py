@@ -340,7 +340,7 @@ async def start_command(message: types.Message):
 @dp.message(lambda message: message.content_type == "web_app_data")
 async def webapp_data(message: types.Message):
     res = json.loads(message.web_app_data.data)
-    await message.answer(f"Данные из Web App: , {res ['name']}, 'Email: {res["email"]}, {res['phone']}")
+    await message.answer(f"Данные из Web App: , {res ['name']},  {res["email"]}, {res['phone']}")
 
 # Запуск бота
 async def main():
