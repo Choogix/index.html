@@ -311,39 +311,44 @@
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
-
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-
+# Команда /start
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
-    # Кнопка с web_app — параметр называется web_app, а не web_add/webApp и т.п.
-    kb = InlineKeyboardMarkup(
+    kb = ReplyKeyboardMarkup(
         keyboard=[
             [
-                InlineKeyboardButton(
+                KeyboardButton(
                     text="Открыть веб-страницу",
-                    web_app=WebAppInfo(url="https://choogix.github.io/index.html/")  # лучше https
+                    web_app=WebAppInfo(url="https://choogix.github.io/index.html")
                 )
             ]
         ],
         resize_keyboard=True,
         one_time_keyboard=True
     )
-    await message.answer("Привет. Бот работает корректно ✅", reply_markup=kb)
+    await message.answer("Привет! Нажми кнопку ниже:", reply_markup=kb)
 
+# Обработчик данных из Web App
+@dp.message(lambda message: message.content_type == "web_app_data")
+async def webapp_data(message: types.Message):
+    await message.answer(f"Данные из Web App: {message.web_app_data.data}")
 
+# Запуск бота
 async def main():
     await dp.start_polling(bot)
 
-
 if __name__ == "__main__":
     asyncio.run(main())
+
+
+
 
 
 
