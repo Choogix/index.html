@@ -309,6 +309,7 @@
 #     asyncio.run(main())
 
 import asyncio
+import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
@@ -338,7 +339,8 @@ async def start_command(message: types.Message):
 # Обработчик данных из Web App
 @dp.message(lambda message: message.content_type == "web_app_data")
 async def webapp_data(message: types.Message):
-    await message.answer(f"Данные из Web App: {message.web_app_data.data}")
+    res = json.loads(message.web_app_data.data)
+    await message.answer(f"Данные из Web App: , {res ['name']}, 'Email: {res["email"]}, {res['phone']}")
 
 # Запуск бота
 async def main():
