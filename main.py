@@ -311,7 +311,7 @@
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
@@ -323,10 +323,10 @@ dp = Dispatcher()
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
     # Кнопка с web_app — параметр называется web_app, а не web_add/webApp и т.п.
-    kb = ReplyKeyboardMarkup(
+    kb = InlineKeyboardMarkup(
         keyboard=[
             [
-                KeyboardButton(
+                InlineKeyboardButton(
                     text="Открыть веб-страницу",
                     web_app=WebAppInfo(url="https://choogix.github.io/index.html/")  # лучше https
                 )
