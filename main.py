@@ -308,17 +308,23 @@
 # if __name__ == "__main__":
 #     asyncio.run(main())
 
+# import asyncio
+# import cfg
+# # import json
+# from aiogram import Bot, Dispatcher, types
+# from aiogram.filters import Command
+# from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
+
 import asyncio
 import cfg
-# import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
+
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
 PAYMENT_TOKEN = "381764678:TEST:147479"
 
-bot = Bot(TOKEN)
+bot = Bot(cfg.BOT_TOKEN)
 dp = Dispatcher()
 
 # # Команда /start
@@ -346,8 +352,15 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
-    await bot.send_invoice(message.chat.id, 'Покупка курса', 'Покупка курса по программированию', 'invoice', cfg.PAYMENT_TOKEN, 'USD', [types.LabeledPrice('Покупка курса', 5*100)] )
-
+    await bot.send_invoice(
+        chat_id=message.chat.id,
+        title="Покупка курса",
+        description="Покупка курса по программированию",
+        payload="invoice",
+        provider_token=cfg.PAYMENT_TOKEN,
+        currency="USD",
+        prices=[types.LabeledPrice(label="Покупка курса", amount=5*100)]
+    )
 
 # Запуск бота
 async def main():
