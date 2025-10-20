@@ -309,38 +309,44 @@
 #     asyncio.run(main())
 
 import asyncio
-import json
+import cfg
+# import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
 
-bot = Bot(token=TOKEN)
+bot = Bot(cfg.BOT_TOKEN)
 dp = Dispatcher()
 
-# Команда /start
-@dp.message(Command("start"))
-async def start_command(message: types.Message):
-    kb = ReplyKeyboardMarkup(
-        keyboard=[
-            [
-                KeyboardButton(
-                    text="Открыть веб-страницу",
-                    web_app=WebAppInfo(url="https://choogix.github.io/index.html")
-                )
-            ]
-        ],
-        resize_keyboard=True,
-        one_time_keyboard=True
-    )
-    await message.answer("Привет! Нажми кнопку ниже:", reply_markup=kb)
+# # Команда /start
+# @dp.message(Command("start"))
+# async def start_command(message: types.Message):
+#     kb = ReplyKeyboardMarkup(
+#         keyboard=[
+#             [
+#                 KeyboardButton(
+#                     text="Открыть веб-страницу",
+#                     web_app=WebAppInfo(url="https://choogix.github.io/index.html")
+#                 )
+#             ]
+#         ],
+#         resize_keyboard=True,
+#         one_time_keyboard=True
+#     )
+#     await message.answer("Привет! Нажми кнопку ниже:", reply_markup=kb)
+#
+# # Обработчик данных из Web App
+# @dp.message(lambda message: message.content_type == "web_app_data")
+# async def webapp_data(message: types.Message):
+#     res = json.loads(message.web_app_data.data)
+#     await message.answer(f"Данные из Web App: , {res ['name']},  {res["email"]}, {res['phone']}")
 
-# Обработчик данных из Web App
-@dp.message(lambda message: message.content_type == "web_app_data")
-async def webapp_data(message: types.Message):
-    res = json.loads(message.web_app_data.data)
-    await message.answer(f"Данные из Web App: , {res ['name']},  {res["email"]}, {res['phone']}")
+@dp.message(Command("start"))
+async def start(message: types.Message):
+    await bot.send_invoice(message.chat.id, 'Покупка курса', 'Покупка курса по программированию', 'invoice', cfg.PAYMENT_TOKEN, 'USD', [types.LabeledPrice('Покупка курса', 5*100)] )
+
 
 # Запуск бота
 async def main():
