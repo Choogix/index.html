@@ -319,7 +319,7 @@ import asyncio
 import cfg
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-
+from aiogram.types import LabeledPrice
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
 PAYMENT_TOKEN = "381764678:TEST:147479"
