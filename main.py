@@ -316,8 +316,9 @@ from aiogram.filters import Command
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
+PAYMENT_TOKEN = "381764678:TEST:147479"
 
-bot = Bot(cfg.BOT_TOKEN)
+bot = Bot(TOKEN)
 dp = Dispatcher()
 
 # # Команда /start
