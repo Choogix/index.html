@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 
 BOT_TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
-PAYMENT_TOKEN = "381764678:TEST:5e1a9c7b..."  # тестовый токен
+PAYMENT_TOKEN = "381764678:TEST:147479"  # тестовый токен
 
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher()
