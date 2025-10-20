@@ -308,36 +308,39 @@
 # if __name__ == "__main__":
 #     asyncio.run(main())
 
-# import asyncio
-# import cfg
-# # import json
-# from aiogram import Bot, Dispatcher, types
-# from aiogram.filters import Command
-# from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
-
 import asyncio
-import cfg
+import json
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import LabeledPrice
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 
 TOKEN = "8327887897:AAFvap9nzXkFUgc46ao6Zgc5PZCpEHL09dw"
-PAYMENT_TOKEN = "381764678:TEST:147479"
 
-bot = Bot(cfg.BOT_TOKEN)
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
+# Команда /start
 @dp.message(Command("start"))
-async def start(message: types.Message):
-    await bot.send_invoice(
-        chat_id=message.chat.id,
-        title="Покупка курса",
-        description="Покупка курса по программированию",
-        payload="invoice",
-        provider_token=cfg.PAYMENT_TOKEN,
-        currency="USD",
-        prices=[types.LabeledPrice(label="Покупка курса", amount=5*100)]
+async def start_command(message: types.Message):
+    kb = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(
+                    text="Открыть веб-страницу",
+                    web_app=WebAppInfo(url="https://choogix.github.io/index.html")
+                )
+            ]
+        ],
+        resize_keyboard=True,
+        one_time_keyboard=True
     )
+    await message.answer("Привет! Нажми кнопку ниже:", reply_markup=kb)
+
+# Обработчик данных из Web App
+@dp.message(lambda message: message.content_type == "web_app_data")
+async def webapp_data(message: types.Message):
+    res = json.loads(message.web_app_data.data)
+    await message.answer(f"Данные из Web App: , {res ['name']},  {res["email"]}, {res['phone']}")
 
 # Запуск бота
 async def main():
@@ -345,33 +348,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-
-
-# # Команда /start
-# @dp.message(Command("start"))
-# async def start_command(message: types.Message):
-#     kb = ReplyKeyboardMarkup(
-#         keyboard=[
-#             [
-#                 KeyboardButton(
-#                     text="Открыть веб-страницу",
-#                     web_app=WebAppInfo(url="https://choogix.github.io/index.html")
-#                 )
-#             ]
-#         ],
-#         resize_keyboard=True,
-#         one_time_keyboard=True
-#     )
-#     await message.answer("Привет! Нажми кнопку ниже:", reply_markup=kb)
-#
-# # Обработчик данных из Web App
-# @dp.message(lambda message: message.content_type == "web_app_data")
-# async def webapp_data(message: types.Message):
-#     res = json.loads(message.web_app_data.data)
-#     await message.answer(f"Данные из Web App: , {res ['name']},  {res["email"]}, {res['phone']}")
-
 
 
 
