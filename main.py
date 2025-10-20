@@ -327,6 +327,28 @@ PAYMENT_TOKEN = "381764678:TEST:147479"
 bot = Bot(cfg.BOT_TOKEN)
 dp = Dispatcher()
 
+@dp.message(Command("start"))
+async def start(message: types.Message):
+    await bot.send_invoice(
+        chat_id=message.chat.id,
+        title="Покупка курса",
+        description="Покупка курса по программированию",
+        payload="invoice",
+        provider_token=cfg.PAYMENT_TOKEN,
+        currency="USD",
+        prices=[types.LabeledPrice(label="Покупка курса", amount=5*100)]
+    )
+
+# Запуск бота
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+
+
+
 # # Команда /start
 # @dp.message(Command("start"))
 # async def start_command(message: types.Message):
@@ -350,24 +372,6 @@ dp = Dispatcher()
 #     res = json.loads(message.web_app_data.data)
 #     await message.answer(f"Данные из Web App: , {res ['name']},  {res["email"]}, {res['phone']}")
 
-@dp.message(Command("start"))
-async def start(message: types.Message):
-    await bot.send_invoice(
-        chat_id=message.chat.id,
-        title="Покупка курса",
-        description="Покупка курса по программированию",
-        payload="invoice",
-        provider_token=cfg.PAYMENT_TOKEN,
-        currency="USD",
-        prices=[types.LabeledPrice(label="Покупка курса", amount=5*100)]
-    )
-
-# Запуск бота
-async def main():
-    await dp.start_polling(bot)
-
-if __name__ == "__main__":
-    asyncio.run(main())
 
 
 
