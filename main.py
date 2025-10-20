@@ -375,6 +375,19 @@ async def start(message: types.Message):
         prices=[types.LabeledPrice(label='Покупка курса', amount=5 * 100)]
     )
 
+@dp.message()
+async def handle_successful_payment(message: types.Message):
+    """
+    Обрабатываем успешную оплату.
+    """
+    if message.successful_payment:
+        payment = message.successful_payment
+        await message.answer(
+            f"✅ Оплата прошла успешно!\n"
+            f"Сумма: {payment.total_amount / 100} {payment.currency}\n"
+            f"Спасибо за покупку!"
+        )
+
 async def main():
     await dp.start_polling(bot)
 
